@@ -23,6 +23,7 @@
     <ProjectGuid>{7C00E7DB-4E6C-4D5F-AAB2-0BFE87F11AD2}</ProjectGuid>
     <RootNamespace>MyProject</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>DeviceManagement</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -123,16 +124,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DeviceInfoEntity.cpp" />
-    <ClCompile Include="DeviceInfoEntityClass.cpp" />
-    <ClCompile Include="DeviceInfoTable.cpp" />
+    <ClCompile Include="Device.cpp" />
+    <ClCompile Include="DeviceClass1.cpp" />
+    <ClCompile Include="DeviceClass2.cpp" />
+    <ClCompile Include="DeviceClass3.cpp" />
+    <ClCompile Include="DeviceTable.cpp" />
+    <ClCompile Include="Location.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Room.cpp" />
+    <ClCompile Include="RoomTable.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DeviceInfoEntityClass.h" />
-    <ClInclude Include="DeviceInfoTable.h" />
-    <ClInclude Include="DeviceInfoEntity.h" />
+    <ClInclude Include="DeviceClass.h" />
+    <ClInclude Include="DeviceTable.h" />
+    <ClInclude Include="Device.h" />
     <ClInclude Include="json.hpp" />
+    <ClInclude Include="Location.h" />
+    <ClInclude Include="Point.h" />
+    <ClInclude Include="Room.h" />
+    <ClInclude Include="RoomTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

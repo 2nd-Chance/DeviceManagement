@@ -5,25 +5,35 @@
 #include <cinttypes>
 #include <memory>
 
-#include "Point.h"
 #include "json.hpp"
 
-namespace mgmt
+namespace csk
 {
 	class Location
 	{
+		friend class LocationBuilder;
+
 	public:
-		static std::shared_ptr<Location> parse(nlohmann::json json);
-		
-		std::uint32_t getLevel(void);
-		void setLevel(std::uint32_t level);
-		std::shared_ptr<mgmt::Point> getPoint(void);
-		void setPoint(std::shared_ptr<mgmt::Point> point);
-		nlohmann::json toJson(void);
+		using JsonType = nlohmann::json;
+
+		Location(void);
+		Location(int x, int y);
+		Location(int level, int x, int y);
+
+		static Location parse(JsonType &json);
+
+		int getLevel(void);
+		void setLevel(int level);
+		int getX(void);
+		void setX(int x);
+		int getY(void);
+		void setY(int y);
+		JsonType toJson(void);
 
 	private:
-		std::uint32_t level;
-		std::shared_ptr<mgmt::Point> point;
+		int level = 1;
+		int x = 0;
+		int y = 0;
 	};
 }
 

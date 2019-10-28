@@ -1,36 +1,63 @@
 #include "Location.h"
 
-namespace mgmt
+namespace csk
 {
-	std::shared_ptr<Location> Location::parse(nlohmann::json json)
+	Location::Location(void) : Location(0, 0) {}
+	
+	Location::Location(int x, int y) : Location(1, x, y) {}
+	
+	Location::Location(int level, int x, int y)
 	{
-		//@ToDo: parse Json
-		return std::shared_ptr<Location>();
+		this->setLevel(level);
+		this->setX(x);
+		this->setY(y);
 	}
-
-	std::uint32_t Location::getLevel(void)
+	
+	Location Location::parse(JsonType &json)
+	{
+		//ToDo: parse JSON
+		return Location();
+	}
+	
+	int Location::getLevel(void)
 	{
 		return this->level;
 	}
 
-	void Location::setLevel(std::uint32_t level)
+	void Location::setLevel(int level)
 	{
+		if (level == 0) {
+			throw level;
+		}
 		this->level = level;
 	}
-
-	std::shared_ptr<mgmt::Point>  Location::getPoint(void)
-	{
-		return this->point;
-	}
-
-	void Location::setPoint(std::shared_ptr<mgmt::Point> point)
-	{
-		this->point = point;
-	}
 	
-	nlohmann::json Location::toJson(void)
+	int Location::getX(void)
 	{
-		//@ToDo: define Json
-		return nlohmann::json();
+		return this->x;
+	}
+
+	void Location::setX(int x)
+	{
+		this->x = x;
+	}
+
+	int Location::getY(void)
+	{
+		return this->y;
+	}
+
+	void Location::setY(int y)
+	{
+		this->y = y;
+	}
+
+	Location::JsonType Location::toJson(void)
+	{
+		nlohmann::json json;
+		json["l"] = this->getLevel();
+		json["x"] = this->getX();
+		json["y"] = this->getY();
+		return json;
 	}
 }

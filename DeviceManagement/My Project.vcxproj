@@ -124,26 +124,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Device.cpp" />
-    <ClCompile Include="DeviceClass1.cpp" />
-    <ClCompile Include="DeviceClass2.cpp" />
-    <ClCompile Include="DeviceClass3.cpp" />
-    <ClCompile Include="DeviceTable.cpp" />
-    <ClCompile Include="Location.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Point.cpp" />
-    <ClCompile Include="Room.cpp" />
-    <ClCompile Include="RoomTable.cpp" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="DeviceBuilder.h" />
     <ClInclude Include="DeviceClass.h" />
-    <ClInclude Include="DeviceTable.h" />
     <ClInclude Include="Device.h" />
+    <ClInclude Include="DeviceClassBuilder.h" />
+    <ClInclude Include="DeviceMap.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Location.h" />
-    <ClInclude Include="Point.h" />
+    <ClInclude Include="LocationBuilder.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="MyMap.h" />
+    <ClInclude Include="MySet.h" />
     <ClInclude Include="Room.h" />
-    <ClInclude Include="RoomTable.h" />
+    <ClInclude Include="RoomBuilder.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Device.cpp" />
+    <ClCompile Include="DeviceBuilder.cpp" />
+    <ClCompile Include="DeviceClass.cpp" />
+    <ClCompile Include="DeviceClassBuilder.cpp" />
+    <ClCompile Include="Location.cpp" />
+    <ClCompile Include="LocationBuilder.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Room.cpp" />
+    <ClCompile Include="RoomBuilder.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

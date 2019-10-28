@@ -2,44 +2,59 @@
 #define Device_h__
 
 
+#include <memory>
 #include <string>
-#include <cinttypes>
-#include <vector>
 
-#include "json.hpp"
+#include "DeviceClass.h"
 
-namespace mgmt
+namespace csk
 {
 	class Device
 	{
+		friend class DeviceBuilder;
+
 	public:
-		virtual ~Device() {}
+		using UuidType = std::string;
+		using BtMacType = std::string;
+		using RoomIdType = std::uint32_t;
+		using JsonType = nlohmann::json;
 
-		static std::shared_ptr<Device> parse(nlohmann::json json);
-
-		std::uint32_t getDeviceId(void);
-		void setDeviceId(std::uint32_t deviceId);
-		std::string getDeviceUuid(void);
-		void setDeviceUuid(std::string deviceUuid);
-		std::string getBluetoothMac(void);
-		void setBluetoothMac(std::string bluetoothMac);
-		bool getAlertState(void);
-		void setAlertState(bool alertState);
-		bool getAliveState(void);
-		void setAliveState(bool aliveState);
-		std::uint32_t getDeviceClass(void);
-		virtual nlohmann::json toJson(void) = 0;
+		UuidType getUuid(void);
+		void setUuid(UuidType uuid);
+		std::shared_ptr<DeviceClass> getDeviceClass(void);
+		void setDeviceClass(std::shared_ptr<DeviceClass> deviceClass);
+		BtMacType getBluetoothMac(void);
+		void setBluetoothMac(BtMacType bluetoothMac);
+		RoomIdType getRoomId(void);
+		void setRoomId(RoomIdType roomId);
+		JsonType toJson(void);
 
 	protected:
-		void setDeviceClass(std::uint32_t deviceClass);
+		Device(UuidType uuid, std::shared_ptr<DeviceClass> deviceClass);
+		Device(UuidType uuid, std::shared_ptr<DeviceClass> deviceClass, BtMacType bluetoothMac);
+		Device(UuidType uuid, std::shared_ptr<DeviceClass> deviceClass, BtMacType bluetoothMac, RoomIdType roomId);
 
-	protected:
-		std::uint32_t deviceId = 0;
-		std::string deviceUuid = "";
-		std::string bluetoothMac = "";
-		std::uint32_t deviceClass = 0;
-		bool alertState = false;
-		bool aliveState = true;
+	private:
+		UuidType uuid;
+		std::shared_ptr<DeviceClass> deviceClass;
+		BtMacType bluetoothMac;
+		RoomIdType roomId;
+	};
+
+	class DynamicDevice : public Device
+	{
+	public:
+		DynamicDevice(UuidType uuid, std::shared_ptr<DeviceClass> deviceClass) : Device(uuid, deviceClass) {}
+		DynamicDevice(UuidType uuid, std::shared_ptr<DeviceClass> deviceClass, BtMacType bluetoothMac) : Device(uuid, deviceClass, bluetoothMac) {}
+		DynamicDevice(UuidType uuid, std::shared_ptr<DeviceClass> deviceClass, BtMacType bluetoothMac, RoomIdType roomId) : Device(uuid, deviceClass, bluetoothMac, roomId) {}
+	};
+	
+	class StaticDevice : public Device
+	{
+	public:
+		StaticDevice(UuidType uuid, std::shared_ptr<DeviceClass> deviceClass) : Device(uuid, deviceClass) {}
+		StaticDevice(UuidType uuid, std::shared_ptr<DeviceClass> deviceClass, BtMacType bluetoothMac) : Device(uuid, deviceClass, bluetoothMac) {}
+		StaticDevice(UuidType uuid, std::shared_ptr<DeviceClass> deviceClass, BtMacType bluetoothMac, RoomIdType roomId) : Device(uuid, deviceClass, bluetoothMac, roomId) {}
 	};
 }
 

@@ -2,48 +2,64 @@
 #define DeviceClass_h__
 
 
+#include <string>
+
 #include "json.hpp"
-#include "Device.h"
 
-namespace mgmt
+namespace csk
 {
-	namespace dev
+	class DeviceClass
 	{
-		class Class3 : public mgmt::Device {
-		public:
-			Class3(void);
+		friend class DeviceClassBuilder;
 
-			static std::shared_ptr<Class3> parse(nlohmann::json json);
+	public:
+		using JsonType = nlohmann::json;
 
-			virtual nlohmann::json toJson(void) override;
-		};
+		bool getAlertState(void);
+		void setAlertState(bool state);
+		bool getAliveState(void);
+		void setAliveState(bool state);
+		virtual JsonType toJson(void);
 
-		class Class2 : public Class3 {
-		public:
-			Class2(void);
+	protected:
+		DeviceClass(void) {}
 
-			static std::shared_ptr<Class2> parse(nlohmann::json json);
+	private:
+		bool alertState = false;
+		bool aliveState = true;
+	};
 
-			std::string getSensorType(void);
-			void setSensorType(std::string sensorType);
-			std::string getSensorValue(void);
-			void setSensorValue(std::string sensorValue);
-			virtual nlohmann::json toJson(void) override;
+	class DeviceClass3 : public DeviceClass
+	{
+	public:
+		JsonType toJson(void) override;
+	};
 
-		protected:
-			std::string sensorType = "";
-			std::string sensorValue = "";
-		};
+	class DeviceClass2 : public DeviceClass3
+	{
+	public:
+		DeviceClass2(void) : DeviceClass3() {}
+		DeviceClass2(std::string sensorType, std::string sensorValue);
 
-		class Class1 : public Class2 {
-		public:
-			Class1(void);
+		std::string getSensorType(void);
+		void setSensorType(std::string sensorType);
+		std::string getSensorValue(void);
+		void setSensorValue(std::string sensorValue);
+		JsonType toJson(void) override;
 
-			static std::shared_ptr<Class1> parse(nlohmann::json json);
+	private:
+		std::string sensorType;
+		std::string sensorValue;
+	};
 
-			virtual nlohmann::json toJson(void) override;
-		};
-	}
+	class DeviceClass1 : public DeviceClass2
+	{
+	public:
+		DeviceClass1(void) : DeviceClass2() {}
+		DeviceClass1(std::string sensorType, std::string sensorValue) : DeviceClass2(sensorType, sensorValue) {}
+
+		JsonType toJson(void) override;
+	};
 }
 
 

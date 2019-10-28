@@ -1,34 +1,99 @@
 #include <iostream>
+#include <cinttypes>
+#include <memory>
+#include <string>
 
-#include "json.hpp"
-#include "DeviceClass.h"
-#include "DeviceTable.h"
+#include "Room.h"
+#include "RoomBuilder.h"
+#include "LocationBuilder.h"
+#include "DeviceBuilder.h"
+#include "DeviceClassBuilder.h"
+#include "main.h"
 
 int main(void)
 {
-	std::cout << "=== start ===" << std::endl << std::endl;
+	withBuilder();
+	std::cout << "=============" << std::endl;
+	withoutBuilder();
+}
 
-	//std::shared_ptr<mgmt::dev::Class1> tuple(new mgmt::dev::Class1());
-	auto tuple = std::make_shared<mgmt::dev::Class1>();
-	tuple->setDeviceId(123);
-	tuple->setDeviceUuid("dev uuid");
-	tuple->setBluetoothMac("bt mac");
-	tuple->setSensorType("sens type");
-	tuple->setSensorValue("sens val");
-	
-	std::cout << tuple->getDeviceId() << std::endl
-		<< tuple->getDeviceUuid() << std::endl
-		<< tuple->getBluetoothMac() << std::endl;
+void withBuilder()
+{
+	auto class3Device1 = csk::DeviceBuilder()
+		.setUuid("10")
+		.setDeviceClass(csk::DeviceClass3Builder()
+			.build()
+		)
+		.setBluetoothMac("aa:bb:cc:dd:ee:ff")
+		.setRoomId(11)
+		.buildStatic();
 
-	std::shared_ptr<mgmt::DeviceTable> table(new mgmt::DeviceTable());
-	table->add(tuple);
-	auto found = table->get(123);
-	if (found)
-	{
-		std::cout << found->toJson().dump() << std::endl;
-	}
-	std::cout << table->remove(123) << std::endl;
-	std::cout << table->remove(123) << std::endl;
+	auto class2Device2 = csk::DeviceBuilder()
+		.setUuid("20")
+		.setDeviceClass(csk::DeviceClass2Builder()
+			.setSensorType("type")
+			.setSensorValue("value")
+			.build()
+		)
+		.setBluetoothMac("ff:ee:dd:cc:bb:aa")
+		.setRoomId(22)
+		.buildStatic();
 
-	std::cout << std::endl << "=== end ===" << std::endl;
+	auto class1Device3 = csk::DeviceBuilder()
+		.setUuid("30")
+		.setDeviceClass(csk::DeviceClass1Builder()
+			.setSensorType("type2")
+			.setSensorValue("value2")
+			.build()
+		)
+		.setBluetoothMac("cc:cc:cc:cc:cc:cc")
+		.setRoomId(33)
+		.buildDynamic();
+
+	auto room = csk::RoomBuilder()
+		.setId(1)
+		.setLocation(csk::LocationBuilder()
+			.setLevel(7)
+			.setX(5)
+			.setY(-5)
+			.build()
+		)
+		.setAlertState(true)
+		.setAliveState(false)
+		.addLink(2)
+		.addLink(3)
+		.addStaticDevice(class3Device1)
+		.addStaticDevice(class2Device2)
+		.addDynamicDevice(class1Device3)
+		.build();
+
+	std::cout << room->toJson().dump() << std::endl;
+}
+
+void withoutBuilder()
+{
+	auto deviceClass3 = std::make_shared<csk::DeviceClass3>();
+	auto device1 = std::make_shared<csk::StaticDevice>("10", deviceClass3);
+	device1->setBluetoothMac("aa:bb:cc:dd:ee:ff");
+	device1->setRoomId(11);
+
+	auto deviceClass2 = std::make_shared<csk::DeviceClass2>("type", "value");
+	auto device2 = std::make_shared<csk::StaticDevice>("20", deviceClass2);
+	device2->setBluetoothMac("ff:ee:dd:cc:bb:aa");
+	device2->setRoomId(22);
+
+	auto deviceClass1 = std::make_shared<csk::DeviceClass1>("type2", "value2");
+	auto device3 = std::make_shared<csk::DynamicDevice>("30", deviceClass1);
+	device3->setBluetoothMac("cc:cc:cc:cc:cc:cc");
+	device3->setRoomId(33);
+
+	auto location = std::make_shared<csk::Location>(7, 5, -5);
+	auto room = std::make_shared<csk::Room>(1, location, true, false);
+	room->getLinks()->add(2);
+	room->getLinks()->add(3);
+	room->getStaticDevices()->add(device1);
+	room->getStaticDevices()->add(device2);
+	room->getDynamicDevices()->add(device3);
+
+	std::cout << room->toJson().dump() << std::endl;
 }

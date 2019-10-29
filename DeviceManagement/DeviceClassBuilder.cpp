@@ -80,4 +80,14 @@ namespace csk
 		Class 1
 	*/
 	
+	std::shared_ptr<DeviceClass> DeviceClass1Builder::build(void)
+	{
+		auto class1 = std::make_shared<DeviceClass1>();
+		class1->setAlertState(this->getAlertState());
+		class1->setAliveState(this->getAliveState());
+		class1->setSensorType(this->getSensorType());
+		class1->setSensorValue(this->getSensorValue());
+		return class1;
+	}
+
 }

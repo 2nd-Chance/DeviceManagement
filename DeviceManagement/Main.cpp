@@ -12,13 +12,22 @@
 
 int main(void)
 {
-	withBuilder();
+	std::cout << "<Test Creation With Builder>" << std::endl;
+	std::string jsonWithBuilder = testCreationWithBuilder();
+	std::cout << jsonWithBuilder << std::endl;
 	std::cout << "=============" << std::endl;
-	withoutBuilder();
+
+	std::cout << "<Test Creation Without Builder>" << std::endl;
+	std::string jsonWithoutBuilder = testCreationWithoutBuilder();
+	std::cout << jsonWithoutBuilder << std::endl;
+	std::cout << "=============" << std::endl;
+
+	std::cout << "<Test Parsing>" << std::endl;
+	std::shared_ptr<csk::Room> room = testParsing(jsonWithoutBuilder);
+	std::cout << "=============" << std::endl;
 }
 
-void withBuilder()
-{
+std::string testCreationWithBuilder(void) {
 	auto class3Device1 = csk::DeviceBuilder()
 		.setUuid("10")
 		.setDeviceClass(csk::DeviceClass3Builder()
@@ -67,11 +76,10 @@ void withBuilder()
 		.addDynamicDevice(class1Device3)
 		.build();
 
-	std::cout << room->toJson().dump() << std::endl;
+	return room->toJson().dump();
 }
 
-void withoutBuilder()
-{
+std::string testCreationWithoutBuilder(void) {
 	auto deviceClass3 = std::make_shared<csk::DeviceClass3>();
 	auto device1 = std::make_shared<csk::StaticDevice>("10", deviceClass3);
 	device1->setBluetoothMac("aa:bb:cc:dd:ee:ff");
@@ -95,5 +103,20 @@ void withoutBuilder()
 	room->getStaticDevices()->add(device2);
 	room->getDynamicDevices()->add(device3);
 
-	std::cout << room->toJson().dump() << std::endl;
+	return room->toJson().dump();
+}
+
+std::shared_ptr<csk::Room> testParsing(std::string &jsonString) {
+	if (nlohmann::json::accept(jsonString))
+	{
+		nlohmann::json json = nlohmann::json::parse(jsonString);
+		std::cout << json.dump(2) << std::endl;
+
+		return csk::Room::parse(json);
+	}
+	else
+	{
+		std::cout << ">>> CANNOT PARSE! <<<" << std::endl;
+		std::cout << jsonString << std::endl;
+	}
 }

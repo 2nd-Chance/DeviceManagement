@@ -48,7 +48,11 @@ namespace csk
 		std::string sensorValue = "";
 	};
 
-	class DeviceClass1Builder : public DeviceClass2Builder {};
+	class DeviceClass1Builder : public DeviceClass2Builder
+	{
+	public:
+		std::shared_ptr<DeviceClass> build(void) override;
+	};
 }
 
 

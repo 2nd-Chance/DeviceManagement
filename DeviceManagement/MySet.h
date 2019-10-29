@@ -17,6 +17,7 @@ namespace csk
 		using JsonType = nlohmann::json;
 
 		MySet(void);
+		static std::shared_ptr<MySet<T>> parse(JsonType json);
 
 		std::shared_ptr<std::set<T>> getSet(void);
 		bool add(T value);
@@ -38,6 +39,17 @@ namespace csk
 	inline MySet<T>::MySet(void)
 	{
 		this->setSet(std::make_shared<std::set<T>>());
+	}
+
+	template<typename T>
+	inline std::shared_ptr<MySet<T>> MySet<T>::parse(JsonType json)
+	{
+		auto mySet = std::make_shared<MySet<T>>();
+		for (const auto &element : json)
+		{
+			mySet->add(element);
+		}
+		return mySet;
 	}
 
 	template<typename T>

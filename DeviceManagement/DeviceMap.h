@@ -17,6 +17,8 @@ namespace csk
 	public:
 		using JsonType = nlohmann::json;
 		
+		static std::shared_ptr<DeviceMap<T>> parse(JsonType json);
+
 		bool add(T device);
 		bool add(std::shared_ptr<T> device);
 
@@ -26,6 +28,20 @@ namespace csk
 		bool add(std::string key, std::shared_ptr<T> value);
 	};
 	
+	template<typename T>
+	inline std::shared_ptr<DeviceMap<T>> DeviceMap<T>::parse(JsonType json)
+	{
+		//@ToDo: map may not be necessary for json (in case compaction is needed)
+		
+		auto deviceMap = std::make_shared<DeviceMap<T>>();
+		for (const auto &element : json)
+		{
+			std::shared_ptr<T> device = T::parse(element);
+			deviceMap->add(device);
+		}
+		return deviceMap;
+	}
+
 	template<typename T>
 	inline bool DeviceMap<T>::add(T device)
 	{

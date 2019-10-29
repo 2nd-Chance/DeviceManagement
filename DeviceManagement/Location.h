@@ -20,7 +20,9 @@ namespace csk
 		Location(int x, int y);
 		Location(int level, int x, int y);
 
-		static Location parse(JsonType &json);
+		enum class JsonEnum { LEVEL, X, Y };
+		static std::string getJsonKey(JsonEnum jsonEnum);
+		static std::shared_ptr<Location> parse(JsonType &json);
 
 		int getLevel(void);
 		void setLevel(int level);

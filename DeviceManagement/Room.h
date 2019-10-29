@@ -4,8 +4,6 @@
 
 #include <cinttypes>
 #include <memory>
-#include <set>
-#include <map>
 
 #include "Location.h"
 #include "json.hpp"
@@ -30,6 +28,8 @@ namespace csk
 		Room(IdType id, std::shared_ptr<Location> location);
 		Room(IdType id, std::shared_ptr<Location> location, bool alertState, bool aliveState);
 
+		enum class JsonEnum { ID , LOCATION, ALERT_STATE, ALIVE_STATE, LINKS, STATIC_DEVICES, DYNAMIC_DEVICES };
+		static std::string getJsonKey(JsonEnum jsonEnum);
 		static std::shared_ptr<Room> parse(JsonType &json);
 
 		IdType getId(void);

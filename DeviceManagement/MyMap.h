@@ -19,7 +19,7 @@ namespace csk
 
 		MyMap(void);
 
-		std::shared_ptr<std::map<K, V>> getMap(void);
+		std::shared_ptr<std::unordered_map<K, V>> getMap(void);
 		bool add(K key, V value);
 		V get(K key);
 		bool remove(K key);
@@ -29,26 +29,26 @@ namespace csk
 		JsonType toJson(void);
 
 	protected:
-		void setMap(std::shared_ptr<std::map<K, V>> map);
+		void setMap(std::shared_ptr<std::unordered_map<K, V>> map);
 
 	private:
-		std::shared_ptr<std::map<K, V>> map;
+		std::shared_ptr<std::unordered_map<K, V>> map;
 	};
 	
 	template<typename K, typename V>
 	inline MyMap<K, V>::MyMap(void)
 	{
-		this->setMap(std::make_shared<std::map<K, V>>());
+		this->setMap(std::make_shared<std::unordered_map<K, V>>());
 	}
 
 	template<typename K, typename V>
-	inline std::shared_ptr<std::map<K, V>> MyMap<K, V>::getMap(void)
+	inline std::shared_ptr<std::unordered_map<K, V>> MyMap<K, V>::getMap(void)
 	{
 		return this->map;
 	}
 	
 	template<typename K, typename V>
-	inline void MyMap<K, V>::setMap(std::shared_ptr<std::map<K, V>> map)
+	inline void MyMap<K, V>::setMap(std::shared_ptr<std::unordered_map<K, V>> map)
 	{
 		this->map = map;
 	}

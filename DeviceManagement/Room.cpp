@@ -20,10 +20,48 @@ namespace csk
 		this->setDynamicDevices(std::make_shared<DynamicDeviceListType>());
 	}
 
+	std::string Room::getJsonKey(JsonEnum jsonEnum)
+	{
+		switch (jsonEnum)
+		{
+		case csk::Room::JsonEnum::ID:
+			return "id";
+		case csk::Room::JsonEnum::LOCATION:
+			return "lc";
+		case csk::Room::JsonEnum::ALERT_STATE:
+			return "ar";
+		case csk::Room::JsonEnum::ALIVE_STATE:
+			return "al";
+		case csk::Room::JsonEnum::LINKS:
+			return "lk";
+		case csk::Room::JsonEnum::STATIC_DEVICES:
+			return "sd";
+		case csk::Room::JsonEnum::DYNAMIC_DEVICES:
+			return "dd";
+		default:
+			return "?";
+		}
+	}
+
 	std::shared_ptr<Room> Room::parse(JsonType &json)
 	{
-		//ToDo: parse JSON
-		return std::shared_ptr<Room>();
+		IdType id = json[Room::getJsonKey(JsonEnum::ID)];
+		std::shared_ptr<Location> location =
+			csk::Location::parse(json[Room::getJsonKey(JsonEnum::LOCATION)]);
+		bool alertState = json[Room::getJsonKey(JsonEnum::ALERT_STATE)] != 0;
+		bool aliveState = json[Room::getJsonKey(JsonEnum::ALIVE_STATE)] != 0;
+		std::shared_ptr<LinkListType> links =
+			LinkListType::parse(json[Room::getJsonKey(JsonEnum::LINKS)]);
+		std::shared_ptr<StaticDeviceListType> staticDevices =
+			StaticDeviceListType::parse(json[Room::getJsonKey(JsonEnum::STATIC_DEVICES)]);
+		std::shared_ptr<DynamicDeviceListType> dynamicDevices =
+			DynamicDeviceListType::parse(json[Room::getJsonKey(JsonEnum::DYNAMIC_DEVICES)]);
+
+		auto room = std::make_shared<Room>(id, location, alertState, aliveState);
+		room->setLinks(links);
+		room->setStaticDevices(staticDevices);
+		room->setDynamicDevices(dynamicDevices);
+		return room;
 	}
 
 	Room::IdType Room::getId(void)
@@ -99,13 +137,13 @@ namespace csk
 	Room::JsonType Room::toJson(void)
 	{
 		JsonType json = JsonType::object();
-		json["id"] = this->getId();
-		json["lc"] = this->getLocation()->toJson();
-		json["ar"] = static_cast<int>(this->getAlertState());
-		json["al"] = static_cast<int>(this->getAliveState());
-		json["lk"] = *(this->getLinks()->getSet()); //@ToDo: fix this
-		json["sd"] = this->getStaticDevices()->toJson();
-		json["dd"] = this->getDynamicDevices()->toJson();
+		json[Room::getJsonKey(JsonEnum::ID)] = this->getId();
+		json[Room::getJsonKey(JsonEnum::LOCATION)] = this->getLocation()->toJson();
+		json[Room::getJsonKey(JsonEnum::ALERT_STATE)] = static_cast<int>(this->getAlertState());
+		json[Room::getJsonKey(JsonEnum::ALIVE_STATE)] = static_cast<int>(this->getAliveState());
+		json[Room::getJsonKey(JsonEnum::LINKS)] = *(this->getLinks()->getSet());
+		json[Room::getJsonKey(JsonEnum::STATIC_DEVICES)] = this->getStaticDevices()->toJson();
+		json[Room::getJsonKey(JsonEnum::DYNAMIC_DEVICES)] = this->getDynamicDevices()->toJson();
 		return json;
 	}
 }

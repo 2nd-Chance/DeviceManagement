@@ -13,10 +13,28 @@ namespace csk
 		this->setY(y);
 	}
 	
-	Location Location::parse(JsonType &json)
+	std::string Location::getJsonKey(JsonEnum jsonEnum)
 	{
-		//ToDo: parse JSON
-		return Location();
+		switch (jsonEnum)
+		{
+		case JsonEnum::LEVEL:
+			return "lv";
+		case JsonEnum::X:
+			return "x";
+		case JsonEnum::Y:
+			return "y";
+		default:
+			return "?";
+		}
+	}
+
+	std::shared_ptr<Location> Location::parse(JsonType &json)
+	{
+		int level = json[Location::getJsonKey(JsonEnum::LEVEL)];
+		int x = json[Location::getJsonKey(JsonEnum::X)];
+		int y = json[Location::getJsonKey(JsonEnum::Y)];
+
+		return std::make_shared<Location>(level, x, y);
 	}
 	
 	int Location::getLevel(void)
@@ -55,9 +73,9 @@ namespace csk
 	Location::JsonType Location::toJson(void)
 	{
 		nlohmann::json json;
-		json["l"] = this->getLevel();
-		json["x"] = this->getX();
-		json["y"] = this->getY();
+		json[Location::getJsonKey(JsonEnum::LEVEL)] = this->getLevel();
+		json[Location::getJsonKey(JsonEnum::X)] = this->getX();
+		json[Location::getJsonKey(JsonEnum::Y)] = this->getY();
 		return json;
 	}
 }

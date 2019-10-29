@@ -1,5 +1,9 @@
 #pragma once
 
-void withoutBuilder();
+int main(void);
 
-void withBuilder();
+std::string testCreationWithBuilder(void);
+
+std::string testCreationWithoutBuilder(void);
+
+std::shared_ptr<csk::Room> testParsing(std::string &jsonString);

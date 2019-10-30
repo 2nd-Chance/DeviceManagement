@@ -137,6 +137,7 @@
     <ClInclude Include="MySet.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomBuilder.h" />
+    <ClInclude Include="RoomMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Device.cpp" />

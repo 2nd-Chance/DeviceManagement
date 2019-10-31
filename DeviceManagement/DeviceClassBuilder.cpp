@@ -1,6 +1,6 @@
 #include "DeviceClassBuilder.h"
 
-namespace csk
+namespace model
 {
 	/*
 		Base class
@@ -49,7 +49,8 @@ namespace csk
 		return this->sensorType;
 	}
 	
-	DeviceClass2Builder &DeviceClass2Builder::setSensorType(std::string sensorType)
+	model::DeviceClass2Builder & DeviceClass2Builder::setSensorType(
+		const std::string &sensorType)
 	{
 		this->sensorType = sensorType;
 		return *this;
@@ -60,7 +61,8 @@ namespace csk
 		return this->sensorValue;
 	}
 	
-	DeviceClass2Builder &DeviceClass2Builder::setSensorValue(std::string sensorValue)
+	model::DeviceClass2Builder & DeviceClass2Builder::setSensorValue(
+		const std::string &sensorValue)
 	{
 		this->sensorValue = sensorValue;
 		return *this;

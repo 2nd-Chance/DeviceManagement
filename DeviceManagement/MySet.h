@@ -8,7 +8,7 @@
 
 #include "json.hpp"
 
-namespace csk
+namespace model
 {
 	template<typename T>
 	class MySet

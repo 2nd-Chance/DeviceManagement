@@ -6,7 +6,7 @@
 
 #include "Room.h"
 
-namespace csk
+namespace model
 {
 	class RoomBuilder
 	{
@@ -24,10 +24,14 @@ namespace csk
 		RoomBuilder &setAliveState(bool state);
 		RoomBuilder &setLinks(std::shared_ptr<LinkListType> links);
 		RoomBuilder &addLink(IdType linkId);
-		RoomBuilder &setStaticDevices(std::shared_ptr<StaticDeviceListType> devices);
-		RoomBuilder &addStaticDevice(std::shared_ptr<StaticDevice> device);
-		RoomBuilder &setDynamicDevices(std::shared_ptr<DynamicDeviceListType> devices);
-		RoomBuilder &addDynamicDevice(std::shared_ptr<DynamicDevice> device);
+		RoomBuilder &setStaticDevices(
+			std::shared_ptr<StaticDeviceListType> devices);
+		RoomBuilder &addStaticDevice(
+			std::shared_ptr<StaticDevice> device);
+		RoomBuilder &setDynamicDevices(
+			std::shared_ptr<DynamicDeviceListType> devices);
+		RoomBuilder &addDynamicDevice(
+			std::shared_ptr<DynamicDevice> device);
 		std::shared_ptr<Room> build(void);
 
 	protected:

@@ -6,7 +6,7 @@
 
 #include "Location.h"
 
-namespace csk
+namespace model
 {
 	class LocationBuilder
 	{
@@ -14,7 +14,7 @@ namespace csk
 		LocationBuilder &setLevel(int level);
 		LocationBuilder &setX(int x);
 		LocationBuilder &setY(int y);
-		std::shared_ptr<csk::Location> build(void);
+		std::shared_ptr<model::Location> build(void);
 
 	protected:
 		int getLevel(void);

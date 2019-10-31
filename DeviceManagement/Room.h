@@ -8,7 +8,6 @@
 #include "Location.h"
 #include "json.hpp"
 #include "Device.h"
-#include "DeviceMap.h"
 #include "MySet.h"
 
 namespace csk
@@ -20,8 +19,8 @@ namespace csk
 	public:
 		using IdType = std::uint32_t;
 		using LinkListType = csk::MySet<IdType>;
-		using StaticDeviceListType = csk::DeviceMap<StaticDevice>;
-		using DynamicDeviceListType = csk::DeviceMap<DynamicDevice>;
+		using StaticDeviceListType = csk::MySet<StaticDevice::UuidType>;
+		using DynamicDeviceListType = csk::MySet<DynamicDevice::UuidType>;
 		using JsonType = nlohmann::json;
 		
 		Room(IdType id);

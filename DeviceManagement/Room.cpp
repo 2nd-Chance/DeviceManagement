@@ -141,7 +141,7 @@ namespace csk
 		json[Room::getJsonKey(JsonEnum::LOCATION)] = this->getLocation()->toJson();
 		json[Room::getJsonKey(JsonEnum::ALERT_STATE)] = static_cast<int>(this->getAlertState());
 		json[Room::getJsonKey(JsonEnum::ALIVE_STATE)] = static_cast<int>(this->getAliveState());
-		json[Room::getJsonKey(JsonEnum::LINKS)] = *(this->getLinks()->getSet());
+		json[Room::getJsonKey(JsonEnum::LINKS)] = this->getLinks()->toJson();
 		json[Room::getJsonKey(JsonEnum::STATIC_DEVICES)] = this->getStaticDevices()->toJson();
 		json[Room::getJsonKey(JsonEnum::DYNAMIC_DEVICES)] = this->getDynamicDevices()->toJson();
 		return json;

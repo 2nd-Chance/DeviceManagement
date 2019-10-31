@@ -28,7 +28,7 @@ int main(void)
 }
 
 std::string testCreationWithBuilder(void) {
-	auto class3Device1 = csk::DeviceBuilder()
+	std::shared_ptr<csk::StaticDevice> class3Device1 = csk::DeviceBuilder()
 		.setUuid("10")
 		.setDeviceClass(csk::DeviceClass3Builder()
 			.build()
@@ -37,7 +37,7 @@ std::string testCreationWithBuilder(void) {
 		.setRoomId(11)
 		.buildStatic();
 
-	auto class2Device2 = csk::DeviceBuilder()
+	std::shared_ptr<csk::StaticDevice> class2Device2 = csk::DeviceBuilder()
 		.setUuid("20")
 		.setDeviceClass(csk::DeviceClass2Builder()
 			.setSensorType("type")
@@ -48,7 +48,7 @@ std::string testCreationWithBuilder(void) {
 		.setRoomId(22)
 		.buildStatic();
 
-	auto class1Device3 = csk::DeviceBuilder()
+	std::shared_ptr<csk::DynamicDevice> class1Device3 = csk::DeviceBuilder()
 		.setUuid("30")
 		.setDeviceClass(csk::DeviceClass1Builder()
 			.setSensorType("type2")
@@ -59,7 +59,7 @@ std::string testCreationWithBuilder(void) {
 		.setRoomId(33)
 		.buildDynamic();
 
-	auto room = csk::RoomBuilder()
+	std::shared_ptr<csk::Room> room = csk::RoomBuilder()
 		.setId(1)
 		.setLocation(csk::LocationBuilder()
 			.setLevel(7)
@@ -99,9 +99,9 @@ std::string testCreationWithoutBuilder(void) {
 	auto room = std::make_shared<csk::Room>(1, location, true, false);
 	room->getLinks()->add(2);
 	room->getLinks()->add(3);
-	room->getStaticDevices()->add(device1);
-	room->getStaticDevices()->add(device2);
-	room->getDynamicDevices()->add(device3);
+	room->getStaticDevices()->add(device1->getUuid());
+	room->getStaticDevices()->add(device2->getUuid());
+	room->getDynamicDevices()->add(device3->getUuid());
 
 	return room->toJson().dump();
 }

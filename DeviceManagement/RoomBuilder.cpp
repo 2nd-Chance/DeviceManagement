@@ -83,7 +83,7 @@ namespace csk
 
 	RoomBuilder &RoomBuilder::addStaticDevice(std::shared_ptr<StaticDevice> device)
 	{
-		this->getStaticDevices()->add(device);
+		this->getStaticDevices()->add(device->getUuid());
 		return *this;
 	}
 	
@@ -100,7 +100,7 @@ namespace csk
 	
 	RoomBuilder &RoomBuilder::addDynamicDevice(std::shared_ptr<DynamicDevice> device)
 	{
-		this->getDynamicDevices()->add(device);
+		this->getDynamicDevices()->add(device->getUuid());
 		return *this;
 	}
 

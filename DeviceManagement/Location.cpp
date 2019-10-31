@@ -1,6 +1,6 @@
 #include "Location.h"
 
-namespace csk
+namespace model
 {
 	Location::Location(void) : Location(0, 0) {}
 	

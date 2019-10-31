@@ -9,7 +9,7 @@
 #include "MyMap.h"
 #include "json.hpp"
 
-namespace csk
+namespace model
 {
 	template<typename T>
 	class DeviceMap : public MyMap<std::string, std::shared_ptr<T>>
@@ -31,8 +31,6 @@ namespace csk
 	template<typename T>
 	inline std::shared_ptr<DeviceMap<T>> DeviceMap<T>::parse(JsonType json)
 	{
-		//@ToDo: map may not be necessary for json (in case compaction is needed)
-		
 		auto deviceMap = std::make_shared<DeviceMap<T>>();
 		for (const auto &element : json)
 		{

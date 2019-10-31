@@ -7,7 +7,7 @@
 
 #include "json.hpp"
 
-namespace csk
+namespace model
 {
 	class Location
 	{

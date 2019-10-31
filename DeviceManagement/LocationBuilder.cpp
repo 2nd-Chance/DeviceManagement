@@ -1,7 +1,7 @@
 #include "LocationBuilder.h"
 
 
-namespace csk
+namespace model
 {
 	int LocationBuilder::getLevel(void)
 	{
@@ -36,9 +36,9 @@ namespace csk
 		return *this;
 	}
 	
-	std::shared_ptr<csk::Location> LocationBuilder::build(void)
+	std::shared_ptr<model::Location> LocationBuilder::build(void)
 	{
-		auto location = std::make_shared<csk::Location>();
+		auto location = std::make_shared<model::Location>();
 		location->setLevel(this->getLevel());
 		location->setX(this->getX());
 		location->setY(this->getY());

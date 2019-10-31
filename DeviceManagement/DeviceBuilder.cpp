@@ -1,13 +1,13 @@
 #include "DeviceBuilder.h"
 
-namespace csk
+namespace model
 {
 	DeviceBuilder::UuidType DeviceBuilder::getUuid(void)
 	{
 		return this->uuid;
 	}
 	
-	DeviceBuilder &csk::DeviceBuilder::setUuid(UuidType uuid)
+	DeviceBuilder &model::DeviceBuilder::setUuid(UuidType uuid)
 	{
 		this->uuid = uuid;
 		return *this;
@@ -18,7 +18,8 @@ namespace csk
 		return this->deviceClass;
 	}
 	
-	DeviceBuilder &DeviceBuilder::setDeviceClass(std::shared_ptr<DeviceClass> deviceClass)
+	DeviceBuilder &DeviceBuilder::setDeviceClass(
+		std::shared_ptr<DeviceClass> deviceClass)
 	{
 		this->deviceClass = deviceClass;
 		return *this;

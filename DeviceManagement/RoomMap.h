@@ -4,6 +4,7 @@
 
 #include <cinttypes>
 
+#include "MyMap.h"
 #include "Room.h"
 
 namespace csk
